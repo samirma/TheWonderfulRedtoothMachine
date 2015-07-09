@@ -3,23 +3,23 @@ package com.antonio.samir.wonderfulredtooth.network;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.util.Log;
 
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.ProxyManager;
 
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * Created by samir on 7/8/15.
  */
 public class ListernerBluetoothThread extends Thread {
 
-    // Name for the SDP record when creating server socket
-    private static final String NAME_SECURE = "RedtoothService";
+    private static final String TAG = "ListernerBluetooth";
 
-    // Unique UUID for this application
-    private static final UUID MY_UUID_SECURE =
-            UUID.fromString("fb87c0d0-afac-11de-8a39-0840200c9a61");
+
+    // Name for the SDP record when creating server socket
+    private static final String NAME_SECURE = "BluetoothChatSecure";
+    private static final String NAME_INSECURE = "BluetoothChatInsecure";
 
 
     private final BluetoothServerSocket mmServerSocket;
@@ -33,9 +33,11 @@ public class ListernerBluetoothThread extends Thread {
         BluetoothServerSocket tmp = null;
         try {
             // MY_UUID is the app's UUID string, also used by the client code
-            tmp = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(NAME_SECURE, MY_UUID_SECURE);
+            tmp = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(NAME_SECURE, proxyManager
+            .getUuidSecure());
 
-        } catch (IOException e) {
+        } catch (Exception ex) {
+            Log.e(TAG, "Fail", ex);
         }
         mmServerSocket = tmp;
 

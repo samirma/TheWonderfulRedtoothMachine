@@ -57,7 +57,16 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
             public void onClick(View v) {
 
                 Intent serverIntent = new Intent(MainActivity.this, DeviceListActivity.class);
-                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
+                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+
+            }
+        });
+
+        startProxy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                proxyManager.doProxy();
 
             }
         });
@@ -113,18 +122,38 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
 
     @Override
     public void readyToStart() {
-        startProxy.setVisibility(View.VISIBLE);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                startProxy.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
     public void startPointReady() {
-        listening.setText(getString(R.string.client_connected));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                listening.setText(getString(R.string.client_connected));
+            }
+        });
+
     }
 
     @Override
     public void endPointReady() {
-        connectButton.setText(String.format("Connected"));
 
-        connectButton.setClickable(false);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                connectButton.setText(String.format("Connected"));
+
+                connectButton.setClickable(false);
+            }
+        });
+
+
     }
 }
