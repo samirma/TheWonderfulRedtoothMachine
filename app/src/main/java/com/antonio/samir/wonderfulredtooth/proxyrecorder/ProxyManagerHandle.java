@@ -9,4 +9,9 @@ public interface ProxyManagerHandle {
     void startPointReady();
 
     void endPointReady();
+
+    void proxyBroken();
+
+    void proxyStarted();
+
 }

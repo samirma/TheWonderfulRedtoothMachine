@@ -18,7 +18,7 @@ public class ProxyManagerBluetooth implements ProxyManager {
 
     // Unique UUID for this application
     private static final UUID MY_UUID_SECURE =
-            UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
+            UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final UUID MY_UUID_INSECURE =
             UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
 
@@ -40,6 +40,7 @@ public class ProxyManagerBluetooth implements ProxyManager {
         this.beanLink = new BeanLink();
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         this.handle = handle;
+        beanLink.handle = handle;
         isEndPointReady = false;
         isStartPointReady = false;
     }
@@ -55,7 +56,10 @@ public class ProxyManagerBluetooth implements ProxyManager {
             new Thread(serverToClient).start();
             new Thread(clientToServer).start();
 
+            handle.proxyStarted();
+
         } catch (Exception ex) {
+            handle.proxyBroken();
             Log.e(TAG, "Fail", ex);
         }
     }

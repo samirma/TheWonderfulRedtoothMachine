@@ -21,4 +21,8 @@ public interface ProxyManager {
 
     UUID getUuidSecure();
 
+    void response(final byte[] buffer);
+
+    void request(final byte[] buffer);
+
 }

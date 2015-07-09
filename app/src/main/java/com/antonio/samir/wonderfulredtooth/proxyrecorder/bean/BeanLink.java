@@ -6,6 +6,8 @@ package com.antonio.samir.wonderfulredtooth.proxyrecorder.bean;
 
 import android.bluetooth.BluetoothSocket;
 
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.ProxyManagerHandle;
+
 /**
  * @author sam
  */
@@ -14,4 +16,5 @@ public class BeanLink {
     public BluetoothSocket client;
     public BluetoothSocket server;
 
+    public ProxyManagerHandle handle;
 }

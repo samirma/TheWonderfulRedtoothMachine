@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
 
     private ProxyManager proxyManager;
 
+    private Switch autoproxy;
+
     private ListernerBluetoothThread bluetoothThread;
 
     @Override
@@ -42,11 +45,7 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
 
         proxyManager = new ProxyManagerBluetooth(this);
 
-        connectButton = (Button) findViewById(R.id.connect_btn);
-
-        startProxy = (Button) findViewById(R.id.id_start_proxy_btn);
-
-        listening = (TextView) findViewById(R.id.id_listening_label);
+        bindVariables();
 
         bluetoothThread = new ListernerBluetoothThread(proxyManager);
 
@@ -71,6 +70,16 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
             }
         });
 
+    }
+
+    private void bindVariables() {
+        connectButton = (Button) findViewById(R.id.connect_btn);
+
+        startProxy = (Button) findViewById(R.id.id_start_proxy_btn);
+
+        listening = (TextView) findViewById(R.id.id_listening_label);
+
+        autoproxy = (Switch) findViewById(R.id.id_auto_proxy);
     }
 
 
@@ -126,7 +135,11 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                startProxy.setVisibility(View.VISIBLE);
+                if (autoproxy.isChecked()) {
+                    proxyManager.doProxy();
+                } else {
+                    startProxy.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -148,12 +161,42 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
                 connectButton.setText(String.format("Connected"));
 
                 connectButton.setClickable(false);
+
+                startProxy.setVisibility(View.INVISIBLE);
+
             }
         });
 
+
+    }
+
+    @Override
+    public void proxyBroken() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                connectButton.setText(String.format("Try to connect again"));
+
+                connectButton.setClickable(true);
+
+                listening.setText("Conenction lost");
+            }
+        });
+    }
+
+    @Override
+    public void proxyStarted() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(MainActivity.this, R.string.proxy_started,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

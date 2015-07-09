@@ -42,6 +42,13 @@
             android:layout_height="wrap_content"
             android:text="@string/start_proxy"
             android:visibility="invisible" />
+
+        <Switch
+            android:id="@+id/id_auto_proxy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Auto Proxy" />
+
     </LinearLayout>
 
 </RelativeLayout>
