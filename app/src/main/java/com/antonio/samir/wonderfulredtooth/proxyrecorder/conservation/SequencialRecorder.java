@@ -8,12 +8,12 @@ import java.util.List;
  */
 public class SequencialRecorder implements ConversationRecorder {
 
-    private ArrayList<Byte> incomming;
+    private ArrayList<Byte> incomming = null;
 
-    private boolean requesting;
-    private boolean responsing;
+    private Boolean requesting;
+    private Boolean responsing;
 
-    private ArrayList<Message> messages;
+    private ArrayList<Message> messages = null;
 
     @Override
     public void start() {
@@ -25,12 +25,23 @@ public class SequencialRecorder implements ConversationRecorder {
 
     @Override
     public void stop() {
+
+        messageSent();
+
+        messages = null;
+
+    }
+
+    public void messageSent() {
         MessageType type = MessageType.REQUEST;
         if (responsing) {
             type = MessageType.RESPONSE;
         }
 
         saveMessage(type);
+
+        requesting = false;
+        responsing = false;
 
     }
 
@@ -40,9 +51,11 @@ public class SequencialRecorder implements ConversationRecorder {
 
         MessageType type = MessageType.RESPONSE;
 
-        final boolean changeDirection = responsing;
+        processBuffer(buffer, type, responsing);
 
-        processBuffer(buffer, type, changeDirection);
+        if (responsing) {
+            responsing = Boolean.FALSE;
+        }
 
     }
 
@@ -52,9 +65,11 @@ public class SequencialRecorder implements ConversationRecorder {
 
         MessageType type = MessageType.REQUEST;
 
-        final boolean changeDirection = requesting;
+        processBuffer(buffer, type, requesting);
 
-        processBuffer(buffer, type, changeDirection);
+        if (requesting) {
+            requesting = Boolean.FALSE;
+        }
     }
 
     private void processBuffer(byte[] buffer, MessageType type, boolean changeDirection) {
@@ -62,6 +77,10 @@ public class SequencialRecorder implements ConversationRecorder {
             saveMessage(type);
         }
 
+        copyToIncommingBuffer(buffer);
+    }
+
+    private void copyToIncommingBuffer(byte[] buffer) {
         for (Byte byt : buffer) {
             incomming.add(byt);
         }
@@ -69,7 +88,8 @@ public class SequencialRecorder implements ConversationRecorder {
 
     private void saveMessage(MessageType type) {
         final Message message = new Message(type, incomming);
-        getMessages().add(message);
+        final List<Message> messages = getMessages();
+        messages.add(message);
         incomming = new ArrayList<>();
     }
 

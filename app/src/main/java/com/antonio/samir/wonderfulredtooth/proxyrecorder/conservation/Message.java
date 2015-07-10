@@ -15,5 +15,14 @@ public class Message {
         this.content = content;
     }
 
+    public byte[] getContentAsArray() {
+        byte[] contentsAsArray = new byte[content.size()];
+        int index = 0;
+        for (byte byt : content) {
+            contentsAsArray[index] = byt;
+            index++;
+        }
+        return contentsAsArray;
+    }
 }
 
