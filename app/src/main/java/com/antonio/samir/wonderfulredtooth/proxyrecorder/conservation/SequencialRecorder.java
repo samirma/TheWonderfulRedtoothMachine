@@ -1,6 +1,7 @@
 package com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by samir on 7/10/15.
@@ -12,18 +13,24 @@ public class SequencialRecorder implements ConversationRecorder {
     private boolean requesting;
     private boolean responsing;
 
-    private ArrayList<Message> mensages;
+    private ArrayList<Message> messages;
 
     @Override
     public void start() {
         requesting = false;
         responsing = false;
         incomming = new ArrayList<>();
-        mensages = new ArrayList<>();
+        messages = new ArrayList<>();
     }
 
     @Override
     public void stop() {
+        MessageType type = MessageType.REQUEST;
+        if (responsing) {
+            type = MessageType.RESPONSE;
+        }
+
+        saveMessage(type);
 
     }
 
@@ -52,9 +59,7 @@ public class SequencialRecorder implements ConversationRecorder {
 
     private void processBuffer(byte[] buffer, MessageType type, boolean changeDirection) {
         if (changeDirection) {
-            final Message message = new Message(type, incomming);
-            mensages.add(message);
-            incomming = new ArrayList<>();
+            saveMessage(type);
         }
 
         for (Byte byt : buffer) {
@@ -62,5 +67,14 @@ public class SequencialRecorder implements ConversationRecorder {
         }
     }
 
+    private void saveMessage(MessageType type) {
+        final Message message = new Message(type, incomming);
+        getMessages().add(message);
+        incomming = new ArrayList<>();
+    }
 
+
+    public List<Message> getMessages() {
+        return messages;
+    }
 }

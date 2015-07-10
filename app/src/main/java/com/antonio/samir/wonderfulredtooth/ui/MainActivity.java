@@ -199,4 +199,16 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
         });
 
     }
+
+    public void simulateClient(View view) {
+        proxyManager.simulateClient();
+    }
+
+    public void simulateServer(View view) {
+        proxyManager.simulateServer();
+    }
+
+    public void stopRecorder(View view) {
+        proxyManager.stopRecorder();
+    }
 }

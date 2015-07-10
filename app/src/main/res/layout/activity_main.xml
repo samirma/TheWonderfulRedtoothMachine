@@ -49,6 +49,37 @@
             android:layout_height="wrap_content"
             android:text="Auto Proxy" />
 
+        <Button
+            android:id="@+id/id_stop_rec_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="stopRecorder"
+            android:text="@string/stop_recorder" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/id_simulate_server_btn"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="simulateServer"
+                android:text="@string/simulate_server" />
+
+            <Button
+                android:id="@+id/id_simulate_client_btn"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="simulateClient"
+                android:text="@string/simulate_client" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

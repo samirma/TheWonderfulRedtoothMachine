@@ -25,4 +25,9 @@ public interface ProxyManager {
 
     void request(final byte[] buffer);
 
+    void simulateServer();
+
+    void simulateClient();
+
+    void stopRecorder();
 }

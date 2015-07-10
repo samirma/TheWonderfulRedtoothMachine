@@ -10,6 +10,10 @@ import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.Conversati
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.SequencialRecorder;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.proxies.RecorderClientToServer;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.proxies.RecorderServerToClient;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ClientDeviceSimulator;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ClientDeviceSimulatorSequecial;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ServerDeviceSimulator;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ServerDeviceSimulatorSequecial;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -25,9 +29,7 @@ public class ProxyManagerBluetooth implements ProxyManager {
             UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
 
     private BeanLink beanLink;
-    /**
-     * Local Bluetooth adapter
-     */
+
     private BluetoothAdapter mBluetoothAdapter = null;
 
     private BluetoothSocket clientSocket;
@@ -39,6 +41,7 @@ public class ProxyManagerBluetooth implements ProxyManager {
     private boolean isStartPointReady;
 
     private ConversationRecorder conversationRecorder;
+
 
     public ProxyManagerBluetooth(final ProxyManagerHandle handle) {
         this.beanLink = new BeanLink();
@@ -149,6 +152,31 @@ public class ProxyManagerBluetooth implements ProxyManager {
     @Override
     public void request(byte[] buffer) {
         conversationRecorder.request(buffer);
+    }
+
+    @Override
+    public void simulateServer() {
+        ServerDeviceSimulator deviceSimulator = new ServerDeviceSimulatorSequecial();
+        try {
+            deviceSimulator.start(beanLink.client.getInputStream(), beanLink.client.getOutputStream(), conversationRecorder.getMessages());
+        } catch (IOException e) {
+            Log.e(TAG, null, e);
+        }
+    }
+
+    @Override
+    public void simulateClient() {
+        ClientDeviceSimulator deviceSimulator = new ClientDeviceSimulatorSequecial();
+        try {
+            deviceSimulator.start(beanLink.server.getInputStream(), beanLink.server.getOutputStream(), conversationRecorder.getMessages());
+        } catch (IOException e) {
+            Log.e(TAG, null, e);
+        }
+    }
+
+    @Override
+    public void stopRecorder() {
+        conversationRecorder.stop();
     }
 
 

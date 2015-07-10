@@ -39,5 +39,8 @@
     <string name="start_proxy">Start proxy</string>
     <string name="client_connected">Client Connected</string>
     <string name="proxy_started">Proxy started</string>
+    <string name="simulate_client">Simulate client</string>
+    <string name="simulate_server">Simulate server</string>
+    <string name="stop_recorder">Stop recorder</string>
 
 </resources>
