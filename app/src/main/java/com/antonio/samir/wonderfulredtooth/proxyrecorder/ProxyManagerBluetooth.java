@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.bean.BeanLink;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.ConversationRecorder;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.SequencialRecorder;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.proxies.RecorderClientToServer;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.proxies.RecorderServerToClient;
 
@@ -36,6 +38,8 @@ public class ProxyManagerBluetooth implements ProxyManager {
     private boolean isEndPointReady;
     private boolean isStartPointReady;
 
+    private ConversationRecorder conversationRecorder;
+
     public ProxyManagerBluetooth(final ProxyManagerHandle handle) {
         this.beanLink = new BeanLink();
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -43,20 +47,26 @@ public class ProxyManagerBluetooth implements ProxyManager {
         beanLink.handle = handle;
         isEndPointReady = false;
         isStartPointReady = false;
+
+        conversationRecorder = new SequencialRecorder();
+
     }
 
     @Override
     public void doProxy() {
         try {
 
-            final RecorderServerToClient serverToClient = new RecorderServerToClient(beanLink);
+            conversationRecorder.start();
 
-            final RecorderClientToServer clientToServer = new RecorderClientToServer(beanLink);
+            final RecorderServerToClient serverToClient = new RecorderServerToClient(beanLink, this);
+
+            final RecorderClientToServer clientToServer = new RecorderClientToServer(beanLink, this);
 
             new Thread(serverToClient).start();
             new Thread(clientToServer).start();
 
             handle.proxyStarted();
+
 
         } catch (Exception ex) {
             handle.proxyBroken();
@@ -129,6 +139,16 @@ public class ProxyManagerBluetooth implements ProxyManager {
     @Override
     public UUID getUuidSecure() {
         return MY_UUID_SECURE;
+    }
+
+    @Override
+    public void response(byte[] buffer) {
+        conversationRecorder.response(buffer);
+    }
+
+    @Override
+    public void request(byte[] buffer) {
+        conversationRecorder.request(buffer);
     }
 
 

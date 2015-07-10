@@ -2,6 +2,12 @@
 <items version="2">
 
     <item
+        jar="/Users/samir/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false" revision="22.0.1" sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex
+            dex="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-04fa6262f5498cb72b5d4d8ed44842d73a15ace9.jar" />
+    </item>
+    <item
         jar="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
         jumboMode="false" revision="22.0.1" sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
         <dex
@@ -12,12 +18,6 @@
         jumboMode="false" revision="22.0.1" sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
         <dex
             dex="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/pre-dexed/debug/classes-af477a0c6db63c30dfd8116cf32b10a681af7c3d.jar" />
-    </item>
-    <item
-        jar="/Users/samir/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
-        jumboMode="false" revision="22.0.1" sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex
-            dex="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-04fa6262f5498cb72b5d4d8ed44842d73a15ace9.jar" />
     </item>
 
 </items>
