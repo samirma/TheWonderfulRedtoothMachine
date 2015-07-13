@@ -19,7 +19,7 @@ public class ClientDeviceSimulatorSequecial implements ClientDeviceSimulator {
     /**
      * It response message goes to output
      */
-    public void start(InputStream input, OutputStream output, final List<Message> messageList) {
+    public void start(final InputStream input, final OutputStream output, final List<Message> messageList) {
         for (Message message : messageList) {
             if (MessageType.RESPONSE == message.type) {
                 try {

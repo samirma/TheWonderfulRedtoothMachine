@@ -2,8 +2,8 @@ package com.antonio.samir.simulator;
 
 import com.antonio.samir.tool.MessageCreator;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.Message;
-import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ClientDeviceSimulator;
-import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ClientDeviceSimulatorSequecial;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ServerDeviceSimulator;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ServerDeviceSimulatorSequecial;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -19,21 +19,21 @@ import java.util.List;
 /**
  * ClientDeviceSimulatorSequecial Tester.
  */
-public class ClientDeviceSimulatorSequecialTest extends TestCase {
+public class ServerDeviceSimulatorSequecialTest extends TestCase {
 
-    ClientDeviceSimulator simulator;
+    ServerDeviceSimulator simulator;
 
-    public ClientDeviceSimulatorSequecialTest(String name) {
+    public ServerDeviceSimulatorSequecialTest(String name) {
         super(name);
     }
 
     public static Test suite() {
-        return new TestSuite(ClientDeviceSimulatorSequecialTest.class);
+        return new TestSuite(ServerDeviceSimulatorSequecialTest.class);
     }
 
     public void setUp() throws Exception {
         super.setUp();
-        simulator = new ClientDeviceSimulatorSequecial();
+        simulator = new ServerDeviceSimulatorSequecial();
     }
 
     public void tearDown() throws Exception {
@@ -41,14 +41,12 @@ public class ClientDeviceSimulatorSequecialTest extends TestCase {
     }
 
     /**
-     *
      * Method: start(InputStream input, OutputStream outputStream, List<Message> messageList)
-     *
      */
     public void testStart() throws Exception {
         List<Message> msgs = MessageCreator.getSampleMessages();
 
-        final String response = "first_responsesecond_responsegoodbye_response";
+        final String response = "first_requestsecond_request";
 
         byte[] inputByte = new byte[1];
 
