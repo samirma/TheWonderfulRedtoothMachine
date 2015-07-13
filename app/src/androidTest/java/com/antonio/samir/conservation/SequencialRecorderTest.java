@@ -83,7 +83,7 @@ public class SequencialRecorderTest extends TestCase {
 
         Assert.assertEquals(message.type, MessageType.REQUEST);
 
-        final byte[] content = message.getContentAsArray();
+        final byte[] content = message.content;
 
         String expected = String.format("%s%s", string1, string2);
 
@@ -116,7 +116,7 @@ public class SequencialRecorderTest extends TestCase {
 
         Assert.assertEquals(message.type, MessageType.RESPONSE);
 
-        final byte[] content = message.getContentAsArray();
+        final byte[] content = message.content;
 
         String expected = String.format("%s%s", string1, string2);
 
@@ -159,7 +159,7 @@ public class SequencialRecorderTest extends TestCase {
 
         Assert.assertEquals(message.type, MessageType.REQUEST);
 
-        final byte[] content = message.getContentAsArray();
+        final byte[] content = message.content;
 
         String expected = String.format("%s%s", string1, string2);
 

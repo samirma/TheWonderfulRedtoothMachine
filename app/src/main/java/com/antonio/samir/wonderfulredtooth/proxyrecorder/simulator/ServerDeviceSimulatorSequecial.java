@@ -11,6 +11,9 @@ import java.util.List;
  */
 public class ServerDeviceSimulatorSequecial implements ServerDeviceSimulator {
     @Override
+    /**
+     * It request message goes to output
+     */
     public void start(InputStream input, OutputStream outputStream, List<Message> messageList) {
 
     }

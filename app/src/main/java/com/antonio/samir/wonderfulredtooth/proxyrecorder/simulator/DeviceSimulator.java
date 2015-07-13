@@ -11,5 +11,10 @@ import java.io.OutputStream;
 import java.util.List;
 
 interface DeviceSimulator {
+    /**
+     * @param input
+     * @param outputStream
+     * @param messageList
+     */
     void start(InputStream input, OutputStream outputStream, List<Message> messageList);
 }

@@ -1,5 +1,6 @@
 package com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,17 +9,22 @@ import java.util.List;
 public class Message {
 
     public MessageType type;
-    public List<Byte> content;
+    public byte[] content;
 
-    public Message(MessageType type, List<Byte> content) {
+    public Message(MessageType type, byte[] content) {
         this.type = type;
         this.content = content;
     }
 
-    public byte[] getContentAsArray() {
-        byte[] contentsAsArray = new byte[content.size()];
+    public Message(MessageType type, ArrayList<Byte> incomming) {
+        this.type = type;
+        this.content = getContentAsArray(incomming);
+    }
+
+    private byte[] getContentAsArray(final List<Byte> incomming) {
+        byte[] contentsAsArray = new byte[incomming.size()];
         int index = 0;
-        for (byte byt : content) {
+        for (byte byt : incomming) {
             contentsAsArray[index] = byt;
             index++;
         }
