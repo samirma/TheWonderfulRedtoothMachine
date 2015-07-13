@@ -166,20 +166,26 @@ public class SequencialRecorderTest extends TestCase {
         final String actual = new String(content);
 
         Assert.assertEquals(expected, actual);
+
+        sequencialRecorder.request(string2.getBytes());
+
+        messages = sequencialRecorder.getMessages();
+
+        Assert.assertEquals(2, messages.size());
+
+        sequencialRecorder.response(response1.getBytes());
+
+        messages = sequencialRecorder.getMessages();
+
+        Assert.assertEquals(3, messages.size());
+
+        sequencialRecorder.messageSent();
+
+        messages = sequencialRecorder.getMessages();
+
+        Assert.assertEquals(4, messages.size());
+
     }
 
-    /**
-     * Method: processBuffer(byte[] buffer, MessageType type, boolean changeDirection)
-     */
-    public void testProcessBuffer() throws Exception {
 
-
-    }
-
-    /**
-     * Method: saveMessage(MessageType type)
-     */
-    public void testSaveMessage() throws Exception {
-
-    }
 } 
