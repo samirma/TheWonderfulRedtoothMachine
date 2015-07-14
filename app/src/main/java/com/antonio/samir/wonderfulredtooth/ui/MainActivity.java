@@ -16,10 +16,8 @@ import com.antonio.samir.wonderfulredtooth.network.ListernerBluetoothThread;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.ProxyManager;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.ProxyManagerBluetooth;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.ProxyManagerHandle;
-import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.Message;
 
 import java.io.IOException;
-import java.util.List;
 
 public class MainActivity extends Activity implements ProxyManagerHandle {
 
@@ -224,10 +222,10 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
 
     public void stopRecorder(View view) {
 
-        final List<Message> messages = proxyManager.stopRecorder();
+//        final List<Message> messages = proxyManager.stopRecorder();
 
-//        Intent serverIntent = new Intent(MainActivity.this, MessagesActivity.class);
-//        startActivity(serverIntent);
+        Intent serverIntent = new Intent(MainActivity.this, MessageDashboardActivity.class);
+        startActivity(serverIntent);
 
     }
 
