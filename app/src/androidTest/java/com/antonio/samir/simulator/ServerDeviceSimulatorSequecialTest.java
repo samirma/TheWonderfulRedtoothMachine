@@ -1,7 +1,8 @@
 package com.antonio.samir.simulator;
 
-import com.antonio.samir.tool.MessageCreator;
+import com.antonio.samir.tool.MessageUtil;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.Message;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.MessageType;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ServerDeviceSimulator;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ServerDeviceSimulatorSequecial;
 
@@ -12,8 +13,10 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.util.List;
 
 /**
@@ -44,21 +47,54 @@ public class ServerDeviceSimulatorSequecialTest extends TestCase {
      * Method: start(InputStream input, OutputStream outputStream, List<Message> messageList)
      */
     public void testStart() throws Exception {
-        List<Message> msgs = MessageCreator.getSampleMessages();
+        final List<Message> msgs = MessageUtil.getSampleMessages();
 
-        final String response = "first_requestsecond_request";
 
-        byte[] inputByte = new byte[1];
+        final PipedOutputStream pipedOutputStream = new PipedOutputStream();
 
-        final ByteArrayInputStream input = new ByteArrayInputStream(inputByte);
+
+        final InputStream input = new PipedInputStream(pipedOutputStream);
 
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        simulator.start(input, outputStream, msgs);
+        new Thread() {
+            @Override
+            public void run() {
+                simulator.start(input, outputStream, msgs);
+            }
+        }.start();
 
-        final String stringResponse = new String(outputStream.toByteArray());
+        List<Message> msgsRequest = MessageUtil.filterMessage(msgs, MessageType.REQUEST);
+        List<Message> msgsResponse = MessageUtil.filterMessage(msgs, MessageType.RESPONSE);
 
-        Assert.assertTrue("Response messages shoud be the same", StringUtils.equals(stringResponse, response));
+        int index = 0;
+
+        for (Message msg : msgsRequest) {
+
+            pipedOutputStream.write("req".getBytes());
+
+            Thread.sleep(200);
+
+            final String outputResponse = new String(outputStream.toByteArray());
+
+            final String stringRightResponse = new String(msgsResponse.get(index).content);
+
+            Assert.assertTrue("Response messages shoud be the same", StringUtils.contains(outputResponse, stringRightResponse));
+
+            index++;
+
+        }
+
+        Thread.sleep(1000);
+
+        final String outputResponse = new String(outputStream.toByteArray());
+
+        final String stringRightResponse = new String(msgsResponse.get(msgsResponse.size() - 1).content);
+
+        final boolean contains = outputResponse.contains(stringRightResponse);
+
+        Assert.assertTrue("Response messages shoud be the same", contains);
+
 
     }
 } 

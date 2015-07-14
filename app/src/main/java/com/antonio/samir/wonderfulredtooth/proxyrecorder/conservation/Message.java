@@ -18,10 +18,10 @@ public class Message {
 
     public Message(MessageType type, ArrayList<Byte> incomming) {
         this.type = type;
-        this.content = getContentAsArray(incomming);
+        this.content = convertListToArray(incomming);
     }
 
-    private byte[] getContentAsArray(final List<Byte> incomming) {
+    private byte[] convertListToArray(final List<Byte> incomming) {
         byte[] contentsAsArray = new byte[incomming.size()];
         int index = 0;
         for (byte byt : incomming) {

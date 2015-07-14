@@ -8,6 +8,12 @@
             dex="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-52671a77c7f2c46dd13cd9be7aaf263736c40494.jar" />
     </item>
     <item
+        jar="/Users/samir/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar"
+        jumboMode="false" revision="22.0.1" sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
+        <dex
+            dex="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/pre-dexed/debug/commons-io-2.4-d0762a82032b80a2fbafc9de03c21a34d9969d05.jar" />
+    </item>
+    <item
         jar="/Users/samir/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
         jumboMode="false" revision="22.0.1" sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
         <dex

@@ -10,9 +10,8 @@ import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.Conversati
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.SequencialRecorder;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.proxies.RecorderClientToServer;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.proxies.RecorderServerToClient;
-import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ClientDeviceSimulator;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ClientDeviceSimulatorSequecial;
-import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ServerDeviceSimulator;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.DeviceSimulatorSequecial;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ServerDeviceSimulatorSequecial;
 
 import java.io.IOException;
@@ -156,7 +155,7 @@ public class ProxyManagerBluetooth implements ProxyManager {
 
     @Override
     public void simulateServer() {
-        ServerDeviceSimulator deviceSimulator = new ServerDeviceSimulatorSequecial();
+        DeviceSimulatorSequecial deviceSimulator = new ServerDeviceSimulatorSequecial();
         try {
             deviceSimulator.start(beanLink.client.getInputStream(), beanLink.client.getOutputStream(), conversationRecorder.getMessages());
         } catch (IOException e) {
@@ -166,7 +165,7 @@ public class ProxyManagerBluetooth implements ProxyManager {
 
     @Override
     public void simulateClient() {
-        ClientDeviceSimulator deviceSimulator = new ClientDeviceSimulatorSequecial();
+        DeviceSimulatorSequecial deviceSimulator = new ClientDeviceSimulatorSequecial();
         try {
             deviceSimulator.start(beanLink.server.getInputStream(), beanLink.server.getOutputStream(), conversationRecorder.getMessages());
         } catch (IOException e) {

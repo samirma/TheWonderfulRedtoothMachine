@@ -1,6 +1,6 @@
 package com.antonio.samir.simulator;
 
-import com.antonio.samir.tool.MessageCreator;
+import com.antonio.samir.tool.MessageUtil;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.Message;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ClientDeviceSimulator;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ClientDeviceSimulatorSequecial;
@@ -12,8 +12,10 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.util.List;
 
 /**
@@ -46,13 +48,13 @@ public class ClientDeviceSimulatorSequecialTest extends TestCase {
      *
      */
     public void testStart() throws Exception {
-        List<Message> msgs = MessageCreator.getSampleMessages();
+        List<Message> msgs = MessageUtil.getSampleMessages();
 
         final String response = "first_responsesecond_responsegoodbye_response";
 
-        byte[] inputByte = new byte[1];
+        final PipedOutputStream pipedOutputStream = new PipedOutputStream();
 
-        final ByteArrayInputStream input = new ByteArrayInputStream(inputByte);
+        final InputStream input = new PipedInputStream(pipedOutputStream);
 
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
