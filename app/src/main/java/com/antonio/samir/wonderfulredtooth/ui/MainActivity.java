@@ -1,6 +1,7 @@
 package com.antonio.samir.wonderfulredtooth.ui;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +16,10 @@ import com.antonio.samir.wonderfulredtooth.network.ListernerBluetoothThread;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.ProxyManager;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.ProxyManagerBluetooth;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.ProxyManagerHandle;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.Message;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends Activity implements ProxyManagerHandle {
 
@@ -41,6 +44,17 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final BluetoothAdapter defaultAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (!defaultAdapter.isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+            // Otherwise, setup the chat session
+        }
+
+
+
         setContentView(R.layout.activity_main);
 
         proxyManager = new ProxyManagerBluetooth(this);
@@ -183,7 +197,7 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
 
                 connectButton.setClickable(true);
 
-                listening.setText("Conenction lost");
+                listening.setText("Connection lost");
             }
         });
     }
@@ -209,6 +223,22 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
     }
 
     public void stopRecorder(View view) {
-        proxyManager.stopRecorder();
+
+        final List<Message> messages = proxyManager.stopRecorder();
+
+//        Intent serverIntent = new Intent(MainActivity.this, MessagesActivity.class);
+//        startActivity(serverIntent);
+
+    }
+
+    public void closeConnections(View view) {
+        proxyManager.closeConnections();
+
+        listening.setText("Connection closed");
+
+        connectButton.setClickable(true);
+
+        connectButton.setText(getString(R.string.connect_bt));
+
     }
 }

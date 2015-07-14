@@ -28,13 +28,11 @@ public class SequencialRecorder implements ConversationRecorder {
 
         messageSent();
 
-        messages = null;
-
     }
 
     public void messageSent() {
         MessageType type = MessageType.REQUEST;
-        if (responsing) {
+        if (Boolean.TRUE.equals(responsing)) {
             type = MessageType.RESPONSE;
         }
 

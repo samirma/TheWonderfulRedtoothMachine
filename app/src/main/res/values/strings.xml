@@ -42,5 +42,10 @@
     <string name="simulate_client">Simulate client</string>
     <string name="simulate_server">Simulate server</string>
     <string name="stop_recorder">Stop recorder</string>
+    <string name="close_connections">Close Connections</string>
+    <string name="title_activity_message">Message</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_messages">MessagesActivity</string>
 
 </resources>

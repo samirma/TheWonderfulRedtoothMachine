@@ -2,7 +2,10 @@ package com.antonio.samir.wonderfulredtooth.proxyrecorder;
 
 import android.bluetooth.BluetoothSocket;
 
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.Message;
+
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -29,5 +32,7 @@ public interface ProxyManager {
 
     void simulateClient();
 
-    void stopRecorder();
+    List<Message> stopRecorder();
+
+    void closeConnections();
 }

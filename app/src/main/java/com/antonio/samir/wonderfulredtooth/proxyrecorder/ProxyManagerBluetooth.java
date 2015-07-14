@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.bean.BeanLink;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.ConversationRecorder;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.Message;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.SequencialRecorder;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.proxies.RecorderClientToServer;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.proxies.RecorderServerToClient;
@@ -15,6 +16,9 @@ import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.DeviceSimulat
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.simulator.ServerDeviceSimulatorSequecial;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
 import java.util.UUID;
 
 public class ProxyManagerBluetooth implements ProxyManager {
@@ -116,6 +120,7 @@ public class ProxyManagerBluetooth implements ProxyManager {
             mmSocket.connect();
         } catch (IOException e) {
             Log.e(TAG, "fail to connect", e);
+
             try {
                 mmSocket.close();
             } catch (IOException closeException) {
@@ -157,7 +162,10 @@ public class ProxyManagerBluetooth implements ProxyManager {
     public void simulateServer() {
         DeviceSimulatorSequecial deviceSimulator = new ServerDeviceSimulatorSequecial();
         try {
-            deviceSimulator.start(beanLink.client.getInputStream(), beanLink.client.getOutputStream(), conversationRecorder.getMessages());
+            final InputStream inputStream = beanLink.client.getInputStream();
+            final OutputStream outputStream = beanLink.client.getOutputStream();
+            final List<Message> messages = conversationRecorder.getMessages();
+            deviceSimulator.start(inputStream, outputStream, messages);
         } catch (IOException e) {
             Log.e(TAG, null, e);
         }
@@ -174,8 +182,31 @@ public class ProxyManagerBluetooth implements ProxyManager {
     }
 
     @Override
-    public void stopRecorder() {
-        conversationRecorder.stop();
+    public List<Message> stopRecorder() {
+        //conversationRecorder.stop();
+
+        final List<Message> messages = conversationRecorder.getMessages();
+
+        return messages;
+
+    }
+
+    @Override
+    public void closeConnections() {
+        final BluetoothSocket socket = beanLink.server;
+        final BluetoothSocket client = beanLink.client;
+        try {
+            closeSocket(socket);
+            closeSocket(client);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void closeSocket(BluetoothSocket socket) throws IOException {
+        if (socket != null && socket.isConnected()) {
+            socket.close();
+        }
     }
 
 

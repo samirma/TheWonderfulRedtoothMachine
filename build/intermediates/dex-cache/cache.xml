@@ -2,34 +2,10 @@
 <items version="2">
 
     <item
-        jar="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
-        jumboMode="false" revision="22.0.1" sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex
-            dex="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-52671a77c7f2c46dd13cd9be7aaf263736c40494.jar" />
-    </item>
-    <item
-        jar="/Users/samir/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar"
-        jumboMode="false" revision="22.0.1" sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
-        <dex
-            dex="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/pre-dexed/debug/commons-io-2.4-d0762a82032b80a2fbafc9de03c21a34d9969d05.jar" />
-    </item>
-    <item
-        jar="/Users/samir/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
-        jumboMode="false" revision="22.0.1" sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex
-            dex="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-04fa6262f5498cb72b5d4d8ed44842d73a15ace9.jar" />
-    </item>
-    <item
         jar="/Users/samir/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.4/5fe28b9518e58819180a43a850fbc0dd24b7c050/commons-lang3-3.4.jar"
         jumboMode="false" revision="22.0.1" sha1="5fe28b9518e58819180a43a850fbc0dd24b7c050">
         <dex
             dex="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/pre-dexed/debug/commons-lang3-3.4-3102cb896bd485c5f2b0ea7dac21e6faefc5af8b.jar" />
-    </item>
-    <item
-        jar="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
-        jumboMode="false" revision="22.0.1" sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex
-            dex="/Users/samir/Desktop/WonderfulRedtooth/app/build/intermediates/pre-dexed/debug/classes-af477a0c6db63c30dfd8116cf32b10a681af7c3d.jar" />
     </item>
 
 </items>
