@@ -48,5 +48,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_messages">MessagesActivity</string>
     <string name="title_activity_message_dashboard">MessageDashboardActivity</string>
+    <string name="go_to_dashboard">Go to dashboard</string>
 
 </resources>

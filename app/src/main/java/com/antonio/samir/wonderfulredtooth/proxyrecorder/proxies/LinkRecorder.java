@@ -48,8 +48,7 @@ public abstract class LinkRecorder
     }
 
     private void writeToProxyManager(byte[] buffer, int i, int lenRead) {
-        final byte[] bytes = new byte[lenRead];
-        Arrays.copyOfRange(buffer, i, lenRead);
+        final byte[] bytes = Arrays.copyOfRange(buffer, i, lenRead);
         write(bytes);
     }
 

@@ -30,5 +30,10 @@ public class Message {
         }
         return contentsAsArray;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s - %s", type, new String(content));
+    }
 }
 

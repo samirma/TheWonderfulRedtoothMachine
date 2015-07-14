@@ -69,6 +69,13 @@
             android:onClick="stopRecorder"
             android:text="@string/stop_recorder" />
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="goToDashborad"
+            android:text="@string/go_to_dashboard" />
+
     </LinearLayout>
 
 </RelativeLayout>

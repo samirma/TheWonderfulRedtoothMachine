@@ -47,7 +47,7 @@ public class SequencialRecorder implements ConversationRecorder {
     public void request(byte[] buffer) {
         requesting = true;
 
-        MessageType type = MessageType.RESPONSE;
+        MessageType type = MessageType.REQUEST;
 
         processBuffer(buffer, type, responsing);
 
@@ -61,7 +61,7 @@ public class SequencialRecorder implements ConversationRecorder {
     public void response(byte[] buffer) {
         responsing = true;
 
-        MessageType type = MessageType.REQUEST;
+        MessageType type = MessageType.RESPONSE;
 
         processBuffer(buffer, type, requesting);
 

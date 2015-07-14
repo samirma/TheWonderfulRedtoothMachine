@@ -12,12 +12,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.antonio.samir.wonderfulredtooth.R;
+import com.antonio.samir.wonderfulredtooth.model.Conversation;
 import com.antonio.samir.wonderfulredtooth.network.ListernerBluetoothThread;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.ProxyManager;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.ProxyManagerBluetooth;
 import com.antonio.samir.wonderfulredtooth.proxyrecorder.ProxyManagerHandle;
+import com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation.Message;
+import com.antonio.samir.wonderfulredtooth.repository.ConversationRepository;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends Activity implements ProxyManagerHandle {
 
@@ -42,6 +46,8 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initServices();
 
         final BluetoothAdapter defaultAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -82,6 +88,10 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
             }
         });
 
+    }
+
+    private void initServices() {
+        ConversationRepository.init(this);
     }
 
     private void bindVariables() {
@@ -222,10 +232,22 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
 
     public void stopRecorder(View view) {
 
-//        final List<Message> messages = proxyManager.stopRecorder();
+        final List<Message> messages = proxyManager.stopRecorder();
 
-        Intent serverIntent = new Intent(MainActivity.this, MessageDashboardActivity.class);
-        startActivity(serverIntent);
+        if (messages != null && !messages.isEmpty()) {
+
+            final Conversation conversation = new Conversation();
+
+            conversation.description = "Just a test";
+            conversation.id = 1;
+            conversation.messages = messages;
+
+            final ConversationRepository repository = ConversationRepository.getRepository();
+            repository.saveConversation(conversation);
+
+        }
+
+
 
     }
 
@@ -238,5 +260,10 @@ public class MainActivity extends Activity implements ProxyManagerHandle {
 
         connectButton.setText(getString(R.string.connect_bt));
 
+    }
+
+    public void goToDashborad(View view) {
+        Intent serverIntent = new Intent(MainActivity.this, MessageDashboardActivity.class);
+        startActivity(serverIntent);
     }
 }
