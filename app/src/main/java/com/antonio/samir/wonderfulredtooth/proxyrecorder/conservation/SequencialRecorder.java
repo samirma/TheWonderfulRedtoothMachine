@@ -1,7 +1,10 @@
 package com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by samir on 7/10/15.
@@ -10,15 +13,12 @@ public class SequencialRecorder implements ConversationRecorder {
 
     private ArrayList<Byte> incomming = null;
 
-    private Boolean requesting;
-    private Boolean responsing;
+    private MessageType currentStremDirection = null;
 
     private ArrayList<Message> messages = null;
 
     @Override
     public void start() {
-        requesting = false;
-        responsing = false;
         incomming = new ArrayList<>();
         messages = new ArrayList<>();
     }
@@ -26,53 +26,46 @@ public class SequencialRecorder implements ConversationRecorder {
     @Override
     public void stop() {
 
-        messageSent();
+        if (currentStremDirection != null){
+            messageSent();
+            currentStremDirection = null;
+        }
 
     }
 
     public void messageSent() {
-        MessageType type = MessageType.REQUEST;
-        if (Boolean.TRUE.equals(responsing)) {
-            type = MessageType.RESPONSE;
-        }
 
-        saveMessage(type);
+        saveMessage();
 
-        requesting = false;
-        responsing = false;
+        currentStremDirection = null;
 
     }
 
     @Override
     public void request(byte[] buffer) {
-        requesting = true;
 
         MessageType type = MessageType.REQUEST;
 
-        processBuffer(buffer, type, responsing);
-
-        if (responsing) {
-            responsing = Boolean.FALSE;
-        }
+        processBuffer(buffer, type);
 
     }
 
     @Override
     public void response(byte[] buffer) {
-        responsing = true;
 
         MessageType type = MessageType.RESPONSE;
 
-        processBuffer(buffer, type, requesting);
+        processBuffer(buffer, type);
 
-        if (requesting) {
-            requesting = Boolean.FALSE;
-        }
     }
 
-    private void processBuffer(byte[] buffer, MessageType type, boolean changeDirection) {
-        if (changeDirection) {
-            saveMessage(type);
+    private void processBuffer(byte[] buffer, MessageType type) {
+        final boolean isDifferentStream = !Objects.equals(type, currentStremDirection);
+        if (isDifferentStream) {
+            if (currentStremDirection!=null) {
+                saveMessage();
+            }
+            currentStremDirection = type;
         }
 
         copyToIncommingBuffer(buffer);
@@ -84,8 +77,8 @@ public class SequencialRecorder implements ConversationRecorder {
         }
     }
 
-    private void saveMessage(MessageType type) {
-        final Message message = new Message(type, incomming);
+    private void saveMessage() {
+        final Message message = new Message(currentStremDirection, incomming);
         final List<Message> messages = getMessages();
         messages.add(message);
         incomming = new ArrayList<>();

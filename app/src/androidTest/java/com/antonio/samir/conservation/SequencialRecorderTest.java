@@ -51,12 +51,14 @@ public class SequencialRecorderTest extends TestCase {
         Assert.assertNull(sequencialRecorder.getMessages());
         sequencialRecorder.start();
         final List<Message> messages = sequencialRecorder.getMessages();
+
         Assert.assertNotNull(messages);
-        Assert.assertTrue(messages.size() == 0);
+        Assert.assertTrue(messages.isEmpty());
 
         sequencialRecorder.stop();
 
-        Assert.assertNull(sequencialRecorder.getMessages());
+        final List<Message> msgsToAssert = sequencialRecorder.getMessages();
+        Assert.assertTrue(msgsToAssert.isEmpty());
 
     }
 
@@ -157,8 +159,6 @@ public class SequencialRecorderTest extends TestCase {
 
         final Message message = messages.get(0);
 
-        Assert.assertEquals(message.type, MessageType.REQUEST);
-
         final byte[] content = message.content;
 
         String expected = String.format("%s%s", string1, string2);
@@ -166,6 +166,8 @@ public class SequencialRecorderTest extends TestCase {
         final String actual = new String(content);
 
         Assert.assertEquals(expected, actual);
+
+        Assert.assertEquals(MessageType.REQUEST, message.type);
 
         sequencialRecorder.request(string2.getBytes());
 
