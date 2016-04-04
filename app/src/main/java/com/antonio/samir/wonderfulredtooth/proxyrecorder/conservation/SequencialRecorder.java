@@ -1,5 +1,7 @@
 package com.antonio.samir.wonderfulredtooth.proxyrecorder.conservation;
 
+import android.util.Log;
+
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.Objects;
  */
 public class SequencialRecorder implements ConversationRecorder {
 
+    public static final String TAG = ConversationRecorder.class.getSimpleName();
     private ArrayList<Byte> incomming = null;
 
     private MessageType currentStremDirection = null;
@@ -67,7 +70,8 @@ public class SequencialRecorder implements ConversationRecorder {
             }
             currentStremDirection = type;
         }
-
+        final String msg = String.format("%s - %s", type, new String(buffer));
+        Log.i(TAG, msg);
         copyToIncommingBuffer(buffer);
     }
 
